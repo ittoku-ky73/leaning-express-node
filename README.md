@@ -6,5 +6,4 @@
 
 ## LocalLibraryWebSite
 
-1. [tutorial](https://github.com/shinzanmono/express_nodejs-tutorial/blob/main/doc/tutorial_local_library_website)
-
+1. [tutorial](https://github.com/shinzanmono/express_nodejs-tutorial/blob/main/doc/tutorial_local_library_website.md)

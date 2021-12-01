@@ -40,4 +40,3 @@ exports.author_update_post = function(req, res) {
   res.send('NOT IMPLEMENTED: AUTHOR update POST');
 };
 
-

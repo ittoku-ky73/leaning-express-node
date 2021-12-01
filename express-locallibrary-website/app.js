@@ -1,35 +1,40 @@
 require('dotenv').config();
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var catalogRouter = require('./routes/catalog');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const catalogRouter = require('./routes/catalog');
 
-var app = express();
+const mongoose = require('mongoose');
+
+const app = express();
 
 // Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoURI = 'mongodb+srv://cluster0.q3fti.mongodb.net/test?retryWrites=true&w=majority'
+let mongoURI = 'mongodb+srv://cluster0.q3fti.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(mongoURI, {
   user: process.env.MONGODB_USER,
   pass: process.env.MONGODB_PASSWORD
 });
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// output log in 'dev' mode
 app.use(logger('dev'));
+// retrieve data whose Content-Type is application/json
 app.use(express.json());
+// retrieve data whose Content-Type is application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
+// parse Cookie header and populate req.cookies with an object keyed by the cookie names
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -2,14 +2,12 @@ const mongoose = require('mongoose');
 
 let Schema = mongoose.Schema;
 
-let BookSchema = new Schema(
-  {
-    title: {type: String, required: true},
-    author: {type: Schema.Types.ObjectId, ref: 'Author', required: true},
-    isbn: {type: String, required: true},
-    genre: {type: Schema.Types.ObjectId, ref: 'Genre'},
-  }
-);
+let BookSchema = new Schema({
+  title: {type: String, required: true},
+  author: {type: Schema.ObjectId, ref: 'Author', required: true},
+  isbn: {type: String, required: true},
+  genre: [{type: Schema.ObjectId, ref: 'Genre'}],
+});
 
 // Virtual for book's URL
 BookSchema

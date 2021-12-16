@@ -49,7 +49,7 @@ exports.author_create_get = function(req, res) {
 };
 
 // Handle Author create on POST
-exports.author_create_post = [
+exports.author_create_post = new Array(
   // validate and sanitize the name field
   body('first_name')
     .trim()
@@ -95,13 +95,14 @@ exports.author_create_post = [
       date_of_birth: req.body.date_of_birth,
       date_of_death: req.body.date_of_death
     });
+
     author.save(function(err) {
       if (err) { return next(err); }
       // genre saved. redirect to genre detail page
       res.redirect(author.url);
     });
   }
-];
+);
 
 // Display Author delete from on GET
 exports.author_delete_get = function(req, res) {

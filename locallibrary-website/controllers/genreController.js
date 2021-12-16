@@ -47,7 +47,7 @@ exports.genre_create_get = function(req, res) {
 };
 
 // Handle Genre create on POST.
-exports.genre_create_post = [
+exports.genre_create_post = new Array(
   // validate and sanitize the name field
   body('name', 'Genre name required').trim().isLength({ min: 1 }).escape(),
 
@@ -77,16 +77,18 @@ exports.genre_create_post = [
         if (err) { return next(err); }
 
         // genre exists, redirect to its detail page
-        if (found_genre) { res.redirect(found_genre.url); }
-
-        genre.save(function(err) {
-          if (err) { return next(err); }
-          // genre saved. redirect to genre detail page
-          res.redirect(genre.url);
-        });
+        if (found_genre) {
+          res.redirect(found_genre.url);
+        } else {
+          genre.save(function(err) {
+            if (err) { return next(err); }
+            // genre saved. redirect to genre detail page
+            res.redirect(genre.url);
+          });
+        }
       });
   }
-];
+);
 
 // Display Genre delete form on GET.
 exports.genre_delete_get = function(req, res) {

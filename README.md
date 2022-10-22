@@ -10,14 +10,14 @@
 
 ### 目次
 
-1. [入門](https://github.com/ittoku-ky73/leaning-express-node/doc/introduction.md)
-2. [開発環境の設定](https://github.com/ittoku-ky73/leaning-express-node/doc/development-environment.md)
+1. [入門](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/introduction.md)
+2. [開発環境の設定](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/development-environment.md)
 3. Expressチュートリアル
-   1. [地域図書館のウェブサイト](https://github.com/ittoku-ky73/leaning-express-node/doc/local-library-website.md)
-   2. [スケルトンウェブサイトの作成](https://github.com/ittoku-ky73/leaning-express-node/doc/skeleton-website.md)
-   3. [データベースの使用（Mongoose）](https://github.com/ittoku-ky73/leaning-express-node/doc/mongoose.md)
-   4. [ルートとコントローラー](https://github.com/ittoku-ky73/leaning-express-node/doc/routes.md)
-   5. [ライブラリデータの表示](https://github.com/ittoku-ky73/leaning-express-node/doc/displaying-data.md)
-   6. [フォームの操作](https://github.com/ittoku-ky73/leaning-express-node/doc/forms.md)
-   7. [デプロイ](https://github.com/ittoku-ky73/leaning-express-node/doc/deployment.md)
+   1. [地域図書館のウェブサイト](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/local-library-website.md)
+   2. [スケルトンウェブサイトの作成](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/skeleton-website.md)
+   3. [データベースの使用（Mongoose）](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/mongoose.md)
+   4. [ルートとコントローラー](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/routes.md)
+   5. [ライブラリデータの表示](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/displaying-data.md)
+   6. [フォームの操作](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/forms.md)
+   7. [デプロイ](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/deployment.md)
 

@@ -1,0 +1,30 @@
+{
+  "name": "express-generator-test",
+  "version": "1.0.0",
+  "description": "using npm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ittoku-ky73/leaning-express-node.git",
+    "directory": "express-generator-test"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "ittoku-ky73",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ittoku-ky73/leaning-express-node/issues"
+  },
+  "homepage": "https://github.com/ittoku-ky73/leaning-express-node#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0"
+  }
+}

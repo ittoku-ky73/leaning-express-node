@@ -36,8 +36,19 @@ exports.index = (req, res, next) => {
 
 // display book list
 exports.book_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: book list');
-}
+  Book
+    .find({}, 'title author')
+    .sort({ title: 1 })
+    .populate('author')
+    .exec((err, books) => {
+      if (err) next(err);
+
+      res.render('books/index', {
+        title: 'Book List',
+        books: books,
+      });
+    });
+};
 
 // display book detail
 exports.book_detail = (req, res) => {

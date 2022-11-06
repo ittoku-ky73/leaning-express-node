@@ -6,8 +6,8 @@
       <a href=<%=bookinstance.url %>>
         <%= bookinstance.book.title %>
         (<%= bookinstance.imprint %>)
-        -
       </a>
+      -- 
       <% switch (bookinstance.status) {
         case 'Available': %>
           <span class="text-success"><%= bookinstance.status %></span>
@@ -20,7 +20,7 @@
           <% break;
       } %>
       <% if (bookinstance.status !=='Available' ) { %>
-        <span>(Due: <%= bookinstance.due_back %>)</span>
+        <span>(Due: <%= bookinstance.due_date %>)</span>
       <% } %>
     </li>
   <% }); %>

@@ -1,0 +1,29 @@
+<h1><%= title %></h1>
+
+<% if (bookinstances) { %>
+  <% bookinstances.forEach(bookinstance=> { %>
+    <li>
+      <a href=<%=bookinstance.url %>>
+        <%= bookinstance.book.title %>
+        (<%= bookinstance.imprint %>)
+        -
+      </a>
+      <% switch (bookinstance.status) {
+        case 'Available': %>
+          <span class="text-success"><%= bookinstance.status %></span>
+          <% break;
+        case 'Maintenance': %>
+          <span class="text-danger"><%= bookinstance.status %></span>
+          <% break;
+        default: %>
+          <span class="text-warning"><%= bookinstance.status %></span>
+          <% break;
+      } %>
+      <% if (bookinstance.status !=='Available' ) { %>
+        <span>(Due: <%= bookinstance.due_back %>)</span>
+      <% } %>
+    </li>
+  <% }); %>
+<% } else { %>
+  <li>There are no bookinstances</li>
+<% } %>

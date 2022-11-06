@@ -7,7 +7,7 @@ const genresController = require('../controllers/genres');
 const bookinstancesController = require('../controllers/bookinstances');
 
 // root
-router.get('/', booksController.book_list);
+router.get('/', booksController.index);
 
 /**
  * book routes

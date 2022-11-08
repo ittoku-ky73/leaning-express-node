@@ -20,13 +20,15 @@ exports.genre_list = (req, res, next) => {
 
 // display genre detail
 exports.genre_detail = (req, res, next) => {
+  let genre_id = checkRequestParamsID(req.params.id);
+
   async.parallel(
     {
       genre(callback) {
-        Genre.findById(req.params.id).exec(callback);
+        Genre.findById(genre_id).exec(callback);
       },
       genre_books(callback) {
-        Book.find({ genres: req.params.id }).exec(callback);
+        Book.find({ genres: genre_id }).exec(callback);
       },
     }, (err, results) => {
       if (err) next(err);
@@ -57,22 +59,36 @@ exports.genre_create_post = (req, res) => {
   res.send('NOT IMPLEMENTED: genre create post');
 }
 
-// display genre delete get
-exports.genre_delete_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: genre delete get');
-}
-
-// handle genre delete post
-exports.genre_delete_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: genre delete post');
-}
-
 // display genre update get
 exports.genre_update_get = (req, res) => {
+  let genre_id = checkRequestParamsID(req.params.id);
+
   res.send('NOT IMPLEMENTED: genre update get');
 }
 
 // handle genre update post
 exports.genre_update_post = (req, res) => {
+  let genre_id = checkRequestParamsID(req.params.id);
+
   res.send('NOT IMPLEMENTED: genre update post');
+}
+
+// display genre delete get
+exports.genre_delete_get = (req, res) => {
+  let genre_id = checkRequestParamsID(req.params.id);
+
+  res.send('NOT IMPLEMENTED: genre delete get');
+}
+
+// handle genre delete post
+exports.genre_delete_post = (req, res) => {
+  let genre_id = checkRequestParamsID(req.params.id);
+
+  res.send('NOT IMPLEMENTED: genre delete post');
+}
+
+function checkRequestParamsID(id) {
+  return (id.match(/^[0-9a-fA-F]{24}$/))
+    ? id
+    : null;
 }

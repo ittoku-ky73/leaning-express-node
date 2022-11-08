@@ -1,0 +1,16 @@
+<h1><%= `Genre: ${genre.name}` %></h1>
+<div class="mt-3 ms-3">
+  <h2>Books</h2>
+  <% if (genre_books.length) { %>
+    <dl>
+      <% genre_books.forEach(book => { %>
+        <dt>
+          <a href=<%= book.url %>><%= book.title %></a>
+          <dd><%= book.summary %></dd>
+        </dt>
+      <% }) %>
+    </dl>
+  <% } else { %>
+    <p>this genre has no books</p>
+  <% } %>
+</div>

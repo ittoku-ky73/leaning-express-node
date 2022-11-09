@@ -16,9 +16,27 @@ exports.bookinstance_list = (req, res) => {
 };
 
 // display bookinstance detail
-exports.bookinstance_detail = (req, res) => {
-  res.send('NOT IMPLEMENTED: bookinstance detail: ' + req.params.id);
-}
+exports.bookinstance_detail = (req, res, next) => {
+  let bookinstance_id = checkRequestParamsID(req.params.id);
+
+  Bookinstance
+    .findById(bookinstance_id)
+    .populate('book')
+    .exec((err, bookinstance) => {
+      if (err) return next(err);
+
+      if (bookinstance === null) {
+        const err = new Error('Bookinstance not found');
+        err.status = 404;
+        return next(err);
+      }
+
+      res.render('bookinstances/detail.ejs', {
+        title: `Copy: ${bookinstance.book.title}`,
+        bookinstance: bookinstance,
+      });
+    });
+};
 
 // display bookinstance create get
 exports.bookinstance_create_get = (req, res) => {
@@ -48,4 +66,10 @@ exports.bookinstance_update_get = (req, res) => {
 // handle bookinstance update post
 exports.bookinstance_update_post = (req, res) => {
   res.send('NOT IMPLEMENTED: bookinstance update post');
+}
+
+function checkRequestParamsID(id) {
+  return (id.match(/^[0-9a-fA-F]{24}$/))
+    ? id
+    : null;
 }

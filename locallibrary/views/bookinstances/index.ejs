@@ -20,7 +20,7 @@
           <% break;
       } %>
       <% if (bookinstance.status !=='Available' ) { %>
-        <span>(Due: <%= bookinstance.due_date %>)</span>
+        <span>(Due: <%= bookinstance.due_back_formatted %>)</span>
       <% } %>
     </li>
   <% }); %>

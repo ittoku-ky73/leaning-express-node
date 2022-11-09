@@ -1,8 +1,8 @@
 # 本のコピー詳細ページ
 
-> 参考：https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displaying_data/BookInstance_detail_page_and_challenge
+> 参考：https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displaying_data/BookInstance_list_page
 
-この記事では、Bookinstanceモデルのデータベースからレコードを取得し、それをブラウザで表示していきます。
+この記事では、Bookinstanceの詳細ページを実装していきます。
 
 ### コントローラ
 
@@ -11,63 +11,83 @@
 **/controllers/bookinstances.js**
 
 ```javascript
-exports.bookinstance_list = (req, res, next) => {
-  BookInstance
-    .find()
-    .populate('book')
-    .exec((err, bookinstances) => {
-      if (err) next(err);
+// display bookinstance detail
+exports.bookinstance_detail = (req, res, next) => {
+  let bookinstance_id = checkRequestParamsID(req.params.id);
 
-      res.render('bookinstances/index', {
-        title: 'Bookinstance list',
-        bookinstances: bookinstances,
+  Bookinstance
+    .findById(bookinstance_id)
+    .populate('book')
+    .exec((err, bookinstance) => {
+      if (err) return next(err);
+
+      if (bookinstance === null) {
+        const err = new Error('Bookinstance not found');
+        err.status = 404;
+        return next(err);
+      }
+
+      res.render('bookinstances/detail.ejs', {
+        title: `Copy: ${bookinstance.book.title}`,
+        bookinstance: bookinstance,
       });
     });
 };
+
+function checkRequestParamsID(id) {
+  return (id.match(/^[0-9a-fA-F]{24}$/))
+    ? id
+    : null;
+}
 ```
 
 ### ビュー
 
-以下のコードを追加します。
+次のファイルを作成してコードを追加します。
+
+**/views/bookinstances/detail.ejs**
 
 ```ejs
-<h1><%= title %></h1>
+<h1>ID: <%= bookinstance._id %></h1>
 
-<% if (bookinstances) { %>
-  <% bookinstances.forEach(bookinstance => { %>
+<ul>
+  <li>
+    <strong>Title:</strong>
+    <a href=<%= bookinstance.book.url %>><%= bookinstance.book.title %></a>
+  </li>
+  <li>
+    <strong>Imprint:</strong>
+    <%= bookinstance.imprint %>
+  </li>
+  <li>
+    <strong>Status:</strong>
+    <% if (bookinstance.status === 'Available') { %>
+      <span class="text-success"><%= bookinstance.status %></span>
+    <% } else if (bookinstance.status === 'Maintenance') { %>
+      <span class="text-danger"><%= bookinstance.status %></span>
+    <% } else { %>
+      <span class="text-warning"><%= bookinstance.status %></span>
+    <% } %>
+  </li>
+  <% if (bookinstance.status !== 'Available') { %>
     <li>
-      <a href=<%= bookinstance.url %>>
-        <%= bookinstance.book.title %>
-        (<%= bookinstance.imprint %>)
-        -
-      </a>
-      <% switch (bookinstance.status) {
-        case 'Available': %>
-          <span class="text-success"><%= bookinstance.status %></span>
-          <% break;
-        case 'Maintenance': %>
-          <span class="text-danger"><%= bookinstance.status %></span>
-          <% break;
-        default: %>
-          <span class="text-warning"><%= bookinstance.status %></span>
-          <% break;
-      } %>
-      <% if (bookinstance.status !== 'Available') { %>
-        <span>(Due: <%= bookinstance.due_back %>)</span>
-      <% } %>
+      <strong>Due back:</strong>
+      <%= bookinstance.due_date %>
     </li>
-  <% }) %>
-<% } else { %>
-  <li>There are no books</li>
-<% } %>
+    <% } %>
+</ul>
 ```
 
-### どのように見えるか
+### チャレンジ
 
-ウェブサーバーを立ち上げ、http://localhost:300/catalog/bookinstancesにアクセスして、以下の画像のようになっているか確認してください。
+Authorの寿命の日付表示を改善し、2016年10月6日のような形式で表示して見ましょう。
 
-![locallibary_express_bookinstance_list](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displaying_data/BookInstance_list_page/locallibary_express_bookinstance_list.png)
+次のように実装していきます。
+
+1. `views/bookinstances/detail.ejs`の`due_date`を`due_back_formatted`に置き換える。
+2. `models/author.js`に、`lifespan`という寿命を出力する仮想プロパティを追加します。
+3. viewsのファイルで、`date_of_birth, date_of_death`の部分を、`lifespan`に置き換えます。
 
 ### まとめ
 
-作業ゲー😫
+次は、ウェブフォームの部分をやっていくぜ🤩

@@ -4,10 +4,10 @@ console.log('books, authors, bookinstances, genres model test');
 
 var async = require('async')
 
-var Author = require('./models/author')
-var Book = require('./models/book')
-var BookInstance = require('./models/bookinstance')
-var Genre = require('./models/genre')
+var Author = require('../models/author')
+var Book = require('../models/book')
+var BookInstance = require('../models/bookinstance')
+var Genre = require('../models/genre')
 
 var authors = [];
 var books = [];
@@ -62,10 +62,10 @@ const genresData = [
 /**
  * database setup
  */
+require('dotenv').config();
+
 var mongoose = require('mongoose');
 var mongoDB = process.env.MONGODB;
-
-require('dotenv').config();
 
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,

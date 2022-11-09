@@ -1,0 +1,17 @@
+<h1>Author: <%= author.name %></h1>
+<p><%= `${author.birth_date} - ${author.death_date}` %></p>
+<div class="mt-3 ms-3">
+  <h2>Books</h2>
+  <dl>
+    <% if (author_books.length) { %>
+      <% author_books.forEach(book=> { %>
+        <dt>
+          <a href=<%= book.url %>><%= book.title %></a>
+          <dd><%= book.summary %></dd>
+        </dt>
+      <% }) %>
+    <% } else { %>
+      <p>This author has no books</p>
+    <% } %>
+  </dl>
+</div>

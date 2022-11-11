@@ -1,0 +1,22 @@
+<h1><%= title %></h1>
+<% if (typeof errors !== 'undefined') { %>
+  <ul class="list-group">
+    <% errors.forEach(error => { %>
+      <li class="list-group-item list-group-item-danger"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<form action="/catalog/genre/create" method="post">
+  <div class="form-group mb-3">
+    <label for="name">Genre:</label>
+    <input 
+      type="text" 
+      name="name" 
+      id="name" 
+      placeholder="fantasy, Poetry etc ..." 
+      class="form-control" 
+      value=<%= (typeof genre !== 'undefined') ? genre.name : '' %>
+    >
+  </div>
+  <input type="submit" class="btn btn-primary" value="Create genre">
+</form>

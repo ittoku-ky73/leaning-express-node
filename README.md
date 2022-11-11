@@ -31,5 +31,11 @@
       11. [著者の詳細ページ](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Displaying-data/author_detail.md)
       12. [本のコピー詳細ページ](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Displaying-data/bookinstance_detail.md)
    6. [フォームの操作](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/forms.md)
+      1. [ジャンル作成フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/genre_create_form.md)
+      2. [著者作成フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/author_create_form.md)
+      3. [書籍作成フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/book_create_form.md)
+      4. [書籍コピー作成フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/bookinstance_create_form.md)
+      5. [著者削除フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/author_delete_form.md)
+      6. [書籍更新フォーム](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/Forms/book_update_form.md)
    7. [デプロイ](https://github.com/ittoku-ky73/leaning-express-node/blob/main/doc/deployment.md)
 

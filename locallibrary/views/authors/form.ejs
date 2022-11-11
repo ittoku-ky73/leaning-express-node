@@ -1,0 +1,56 @@
+<h1><%= title %></h1>
+<% if (typeof errors !== 'undefined') { %>
+  <ul class="list-group mb-3">
+    <% errors.forEach(error => { %>
+      <li class="list-group-item list-group-item-danger"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<form action="/catalog/author/create" method="post">
+  <div class="form-group mb-3">
+    <label for="first_name">First name:</label>
+    <input
+      type="text"
+      name="author[first_name]"
+      id="first_name"
+      placeholder="First name"
+      class="form-control"
+      <%# required %>
+      value=<%= typeof author !=='undefined' ? author.first_name : '' %>
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="family_name">First name:</label>
+    <input
+      type="text"
+      name="author[family_name]"
+      id="family_name"
+      placeholder="family name"
+      class="form-control"
+      <%#required %>
+      value=<%=typeof author !=='undefined' ? author.family_name : '' %>
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="date_of_birth">Date of birth:</label>
+    <input
+      type="date"
+      name="author[date_of_birth]"
+      id="date_of_birth"
+      class="form-control"
+      placeholder="dd/mm/yyyy"
+      value=<%=typeof author !=='undefined' ? author.date_of_birth : '' %>
+    >
+  <div class="form-group mb-3">
+    <label for="date_of_birth">Date of death:</label>
+    <input
+      type="date"
+      name="author[date_of_death]"
+      id="date_of_death"
+      class="form-control"
+      placeholder="dd/mm/yyyy"
+      value=<%=typeof author !=='undefined' ? author.date_of_death : '' %>
+    >
+  </div>
+  <input type="submit" class="btn btn-primary" value="Create author">
+</form>

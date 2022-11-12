@@ -1,0 +1,78 @@
+<h1><%= title %></h1>
+<% if (typeof errors !== 'undefined') { %>
+  <ul class="list-group mb-3">
+    <% errors.forEach(error => { %>
+      <li class="list-group-item list-group-item-danger"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<form action="/catalog/book/create" method="post">
+  <div class="form-group mb-3">
+    <label for="book_title">Title:</label>
+    <input
+      type="text"
+      name="book[title]"
+      id="book_title"
+      class="form-control"
+      placeholder="Name of book"
+      required
+      value=<%= (typeof book === 'undefined') ? '' : book.title %>
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="book_author">Author:</label>
+    <select
+      type="select"
+      name="book[author]"
+      id="book_author"
+      class="form-control"
+      placeholder="Select author"
+      required
+    >
+      <% authors.forEach((author) => { %>
+        <option value=<%= author._id %>><%= author.name %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="form-group mb-3">
+    <label for="book_summary">Summary:</label>
+    <textarea
+      name="book[summary]"
+      id="book_summary"
+      class="form-control"
+      placeholder="Summary"
+      required
+    ><%= typeof book === 'undefined' ? '' : book.summary %></textarea>
+  </div>
+  <div class="form-group mb-3">
+    <label for="book_isbn">ISBN:</label>
+    <input
+      type="text"
+      name="book[isbn]"
+      id="book_isbn"
+      class="form-control"
+      placeholder="ISBN13"
+      required
+      value=<%= typeof book === 'undefined' ? '' : book.isbn %>
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="book_genres">Genres:</label>
+    <ul>
+      <% genres.forEach((genre) => { %>
+        <li class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            name="book[genres]"
+            id=<%= genre._id %>
+            class="form-check-input"
+            value=<%= genre._id %>
+            <%= (genre.checked) ? 'checked' : '' %>
+          >
+          <label for=<%= genre._id %> class="form-check-label"><%= genre.name %></label>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Create book">
+</form>

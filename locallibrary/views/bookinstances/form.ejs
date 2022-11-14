@@ -1,0 +1,71 @@
+<h1><%= title %></h1>
+<% if (typeof errors !== 'undefined') { %>
+  <ul class="list-group mb-3">
+    <% errors.forEach(error => { %>
+      <li class="list-group-item list-group-item-danger"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<form action="/catalog/bookinstance/create" method="post">
+  <div class="form-group mt-3">
+    <label for="bookinstance_book">Book:</label>
+    <select
+      type="select"
+      name="bookinstance[book]"
+      id="bookinstance_book"
+      class="form-control"
+      placeholder="Select book"
+      required
+    >
+      <% books.forEach((book) => { %>
+        <option
+          value=<%= book._id %>
+          <% if(typeof selected_book !== 'undefined') { %>
+            <% if(selected_book === book._id.toString()) { %>
+                  <%= 'selected' %>
+            <% } %>
+          <% } %>
+        ><%= book.title %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="form-group mt-3">
+    <label for="bookinstance_imprint">Imprint:</label>
+    <input
+      type="text"
+      name="bookinstance[imprint]"
+      id="bookinstance_imprint"
+      class="form-control"
+      placeholder="Publisher and date information"
+      required
+      value=<%= (typeof bookinstance === 'undefined') ? '' : bookinstance.imprint %>
+    >
+  </div>
+  <div class="form-group mt-3">
+    <label for="bookinstance_due_back">Date when book available:</label>
+    <input
+      type="date"
+      name="bookinstance[due_back]"
+      id="bookinstance_due_back"
+      class="form-control"
+      value=<%= (typeof bookinstance === 'undefined') ? '' : bookinstance.due_back %>
+    >
+  </div>
+  <div class="form-group mt-3">
+    <label for="bookinstance_status">Status:</label>
+    <select
+      type="select"
+      name="bookinstance[status]"
+      id="bookinstance_status"
+      class="form-control"
+      placeholder="Select status"
+      required
+    >
+      <option value="Maintenance">Maintenance</option>
+      <option value="Available">Available</option>
+      <option value="Loaned">Loaned</option>
+      <option value="Reserved">Reserved</option>
+    </select>
+  </div>
+  <input type="submit" class="btn btn-primary mt-3" value="Create bookinstance">
+</form>

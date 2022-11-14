@@ -14,4 +14,9 @@ mongoose.connect(mongoDB, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+const Author = require('../models/author');
+const Book = require('../models/book');
+const Bookinstance = require('../models/bookinstance');
+const Genre = require('../models/genre');
+
 /* your code here */

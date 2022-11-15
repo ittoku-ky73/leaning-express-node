@@ -89,16 +89,6 @@ exports.author_create_post = [
   },
 ];
 
-// Display author delete get
-exports.author_delete_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: author delete get');
-};
-
-// handle author delete post
-exports.author_delete_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: author delete post');
-};
-
 // Display author update get
 exports.author_update_get = (req, res) => {
   res.send('NOT IMPLEMENTED: author update get');
@@ -107,6 +97,64 @@ exports.author_update_get = (req, res) => {
 // handle author update post
 exports.author_update_post = (req, res) => {
   res.send('NOT IMPLEMENTED: author update post');
+};
+
+// Display author delete get
+exports.author_delete_get = (req, res, next) => {
+  let author_id = checkRequestParamsID(req.params.id);
+
+  async.parallel(
+    {
+      author(callback) { Author.findById(author_id).exec(callback); },
+      author_books(callback) { Book.find({ author: author_id }).exec(callback); },
+    },
+    (err, results) => {
+      if (err) next(err);
+
+      // author not found
+      if (results.author === null) {
+        const err = new Error('Book not found');
+        err.status = 404;
+        return next(err);
+      }
+
+      res.render('authors/delete', {
+        title: 'Author delete',
+        author: results.author,
+        author_books: results.author_books,
+      });
+    }
+  );
+};
+
+// handle author delete post
+exports.author_delete_post = (req, res) => {
+  let author_id = checkRequestParamsID(req.body.author.id);
+
+  async.parallel(
+    {
+      author(callback) { Author.findById(author_id).exec(callback); },
+      author_books(callback) { Book.find({ author: author_id }).exec(callback); },
+    },
+    (err, results) => {
+      if (err) next(err);
+
+      if (results.author_books.length > 0) {
+        res.render('authors/delete', {
+          title: 'Author delete',
+          author: results.author,
+          author_books: results.author_books,
+        });
+        return;
+      }
+
+      Author.findByIdAndRemove(author_id, (err) => {
+        if (err) next(err);
+
+        res.redirect('/catalog/authors');
+      });
+    }
+  );
 };
 
 function checkRequestParamsID(id) {

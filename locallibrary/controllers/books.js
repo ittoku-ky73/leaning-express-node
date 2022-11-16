@@ -107,7 +107,7 @@ exports.book_create_get = (req, res, next) => {
 
       debug('authors: ', results.authors);
       debug('genres: ', results.genres);
-      res.render('books/form', {
+      res.render('books/create', {
         title: 'Book create',
         authors: results.authors,
         genres: results.genres,
@@ -145,7 +145,7 @@ exports.book_create_post = [
             }
           });
 
-          res.render('books/form', {
+          res.render('books/create', {
             title: 'Book create',
             authors: results.authors,
             genres: results.genres,
@@ -167,18 +167,102 @@ exports.book_create_post = [
 ];
 
 // display book update get
-exports.book_update_get = (req, res) => {
+exports.book_update_get = (req, res, next) => {
   let book_id = checkRequestParamsID(req.params.id);
 
-  res.send('NOT IMPLEMENTED: book update get');
+  async.parallel(
+    {
+      book(callback) {
+        Book
+          .findById(book_id)
+          .populate('author')
+          .populate('genres')
+          .exec(callback);
+      },
+      authors(callback) {
+        Author
+          .find({}, 'first_name family_name _id')
+          .sort([['family_name', 'ascending']])
+          .exec(callback);
+      },
+      genres(callback) {
+        Genre
+          .find({})
+          .exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) next(err);
+
+      // book not found
+      if (results.book === null) {
+        const err = new Error('Book not found');
+        err.status = 404;
+        return next(err);
+      }
+
+      results.genres.forEach(genre => {
+        if (results.book.genres.includes(genre._id)) {
+          genre.checked = 'true';
+        }
+      });
+
+      res.render('books/update', {
+        title: 'Book update',
+        authors: results.authors,
+        genres: results.genres,
+        book: results.book,
+      });
+    }
+  );
 }
 
 // handle book update post
-exports.book_update_post = (req, res) => {
-  let book_id = checkRequestParamsID(req.params.id);
+exports.book_update_post = [
+  validationBook('book.title'),
+  validationBook('book.summary'),
+  validationBook('book.isbn'),
+  validationBook('book.author'),
+  validationBook('book.genres.*'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const book = new Book(req.body.book);
+    const book_id = checkRequestParamsID(req.params.id);
 
-  res.send('NOT IMPLEMENTED: book update post');
-}
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          authors(callback) { Author.find(callback); },
+          genres(callback) { Genre.find(callback); },
+        },
+        (err, results) => {
+          if (err) next(err);
+
+          results.genres.forEach(genre => {
+            if (book.genres.includes(genre._id)) {
+              genre.checked = 'true';
+            }
+          });
+
+          res.render('books/update', {
+            title: 'Book update',
+            authors: results.authors,
+            genres: results.genres,
+            book: book,
+            errors: errors.array(),
+          });
+        }
+      );
+      return;
+    }
+
+    Book.findByIdAndUpdate(book_id, book, {}, (err, doc) => {
+      if (err) next(err);
+
+      res.redirect(doc.url);
+    });
+  },
+];
 
 // display book delete get
 exports.book_delete_get = (req, res) => {
